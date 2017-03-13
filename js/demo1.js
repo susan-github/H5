@@ -28,12 +28,12 @@ window.onload = function(){
 
     $('#title').bind('click',function(){
         $('#title').css("zIndex",120);
-        $('.modify-options').css("zIndex",zIndex++);
-        $('.modify-options').animate({
+        $('.titleMask').css("zIndex",zIndex++);
+        $('.titleMask').animate({
             bottom:'0'
         },800);
         txt_edit($('#title'));
-        $('.modify-options li').find('button').bind('touchstart');
+        $('.titleMask li').find('button').bind('touchstart');
     });
 
     /*旋转*/
@@ -69,6 +69,8 @@ window.onload = function(){
                 $(obj).css("zIndex","999");
                 var INITBG = $(WZ).css("backgroundColor");
 
+
+
                 $(obj).find(".upload_img_box .checked").removeClass("on");
                 $(obj).find(".default_bg_div").removeClass("on");
 
@@ -93,6 +95,10 @@ window.onload = function(){
                             return false;
                         }
                     });
+                }
+                if($(WZ).attr("id") == 'element_img'){
+                    var INITBG = $(WZ).find("img").attr("src") ;
+                   
                 }
                 //色彩选择
                 $(obj).find(".default_bg_div").on("click",divClick);
@@ -120,6 +126,9 @@ window.onload = function(){
                         $(WZ).css("background","url("+ INITBG+") no-repeat");
                         $(WZ).attr("data-src",INITBG);
                         $(WZ).css("backgroundSize","100% 100%");
+                        if($(WZ).attr("id") == 'element_img'){
+                           $(WZ).find("img").attr("src",INITBG) ;
+                        }
                     }else{
                         $(obj).find(".upload_img_box .checked").removeClass("on");
                         $(obj).find(".default_bg_div").removeClass("on");
@@ -129,6 +138,9 @@ window.onload = function(){
                         $(WZ).css("background","url("+ $(this).find("img").attr("src")+") no-repeat");
                         $(WZ).attr("data-src",$(this).find("img").attr("src"));
                         $(WZ).css("backgroundSize","100% 100%");
+                        if($(WZ).attr("id") == 'element_img'){
+                           $(WZ).find("img").attr("src",$(this).find("img").attr("src")) ;
+                        }
                     }
                 }
 
@@ -192,168 +204,9 @@ window.onload = function(){
                         $(WZ).css("background","url("+ INITBG+") no-repeat");
                         $(WZ).attr("data-src",INITBG);
                         $(WZ).css("backgroundSize","100% 100%");
-                    }
-
-                    $(obj).find(".default_bg_div").off("click",divClick);
-                    $(obj).find(".upload_img_box").off("click",clickBox);
-                    $(".WZ_border button").off("click",bClick);
-                    $('.WZ_color p input').off("change",changeFn);
-
-                });
-
-                $(obj).find("button.sure_btn").on("click",function(){
-                    $(obj).fadeOut();
-                    $(obj).find(".default_bg_div").off("click",divClick);
-                    $(obj).find(".upload_img_box").off("click",clickBox);
-                    $(".WZ_border button").off("click",bClick);
-
-                    $('.WZ_color p input').off("change",changeFn);
-                });
-            }
-            CHANGEWZ(obj,WZ)
-        },1);
-    });
-    $('#scaling_el').on("click",function(){/*
-        changeWZ('.WZ_CHOOSE2', '#scaling_el');*/
-
-        CHANGEWZ = null;
-        WZ = $('#scaling_el');
-        var obj = $('.WZ_CHOOSE2');
-
-        $(obj).find(".default_bg_div").off("click");
-        $(obj).find(".upload_img_box").off("click");
-        $(".WZ_border button").off("click");
-        $('.WZ_color p input').off("change");
-
-        setTimeout(function(){
-            CHANGEWZ = function (obj,WZ){
-                $(obj).fadeIn();
-                $(obj).css("zIndex","999");
-                var INITBG = $(WZ).css("backgroundColor");
-
-                $(obj).find(".upload_img_box .checked").removeClass("on");
-                $(obj).find(".default_bg_div").removeClass("on");
-
-
-
-                if(!!!$(WZ).attr("data-src")){
-                    //色彩选择
-                    var INITBG = $(WZ).css("backgroundColor");
-
-                    $(obj).find(".default_bg_div").each(function(){
-                        if(rgbToHex($(this).css("backgroundColor")) == rgbToHex(INITBG)){
-                            $(this).addClass("on");
-                            return false;
+                        if($(WZ).attr("id") == 'element_img'){
+                           $(WZ).find("img").attr("src",INITBG) ;
                         }
-                    });
-                }else{
-                    //图片选择
-                    var INITBG = $(WZ).attr("data-src");
-                    $(obj).find(".upload_img_box img").each(function(){
-                        if( $(this).attr("src") == INITBG){
-                            $(this).parent().find(".checked").addClass("on");
-                            return false;
-                        }
-                    });
-                }
-                //色彩选择
-                $(obj).find(".default_bg_div").on("click",divClick);
-
-                //图片选择
-                $(obj).find(".upload_img_box").on("click",clickBox);
-
-
-
-                var BORDER_W = $(WZ).css("borderWidth");
-                var BORDER_C = rgbToHex($(WZ).css("borderColor"));
-                console.log(BORDER_C+"----"+BORDER_W);
-                $(".WZ_border span i").text(parseInt(BORDER_W));
-                $(".WZ_color p input").val(BORDER_C);
-                $(".WZ_border button").on("click",bClick);
-
-                $('.WZ_color p input').on("change",changeFn);
-
-                function clickBox(){
-                    if($(this).find(".checked").hasClass("on")){
-                        $(obj).find(".upload_img_box .checked").removeClass("on");
-                        $(obj).find(".default_bg_div").removeClass("on");
-                        //图片选择
-                        $(WZ).css("background","none");
-                        $(WZ).css("background","url("+ INITBG+") no-repeat");
-                        $(WZ).attr("data-src",INITBG);
-                        $(WZ).css("backgroundSize","100% 100%");
-                    }else{
-                        $(obj).find(".upload_img_box .checked").removeClass("on");
-                        $(obj).find(".default_bg_div").removeClass("on");
-                        $(this).find(".checked").addClass("on");
-                        //图片选择
-                        $(WZ).css("background","none");
-                        $(WZ).css("background","url("+ $(this).find("img").attr("src")+") no-repeat");
-                        $(WZ).attr("data-src",$(this).find("img").attr("src"));
-                        $(WZ).css("backgroundSize","100% 100%");
-                    }
-                }
-
-                function divClick(){
-                    if($(this).hasClass("on")){
-                        $(obj).find(".upload_img_box .checked").removeClass("on");
-                        $(obj).find(".default_bg_div").removeClass("on");
-                        $(WZ).css("background","none");
-                        $(WZ).css("backgroundColor",INITBG);
-                        $(WZ).removeAttr("data-src");
-                    }else{
-                        $(obj).find(".upload_img_box .checked").removeClass("on");
-                        $(obj).find(".default_bg_div").removeClass("on");
-                        $(this).addClass("on");
-                        $(WZ).css("background","none");
-                        $(WZ).css("background",$(this).css("background"));
-                        $(WZ).removeAttr("data-src");
-                    }
-                }
-
-                function bClick(){
-                    var BW = parseInt($(".WZ_border span i").html());
-                    console.log("--->",BW)
-                    var TYPE = $(this).val();
-                    if(TYPE === "-"){
-                        if(BW <= 0){
-                            BW = 0;
-                        }else{
-                            BW -= 1;
-                        }
-                    }else if(TYPE ==="+"){
-                        BW = parseInt(BW) + 1;
-                    }
-                    $(".WZ_border span i").html(BW);
-                    $(WZ).css("border",BW + "px solid " + $('.WZ_color p input').val());
-                    choiceSize(WZ);
-                }
-
-                function changeFn(){
-                    $(WZ).css("border", parseInt($(".WZ_border span i").html())+ "px solid " +$(this).val());
-                    choiceSize(WZ);
-                }
-                
-
-                $(obj).find(".close").on("click",function(){
-                    console.log(BORDER_W,"----",BORDER_C);
-                    $(WZ).css("border",parseInt(BORDER_W) + "px solid " + BORDER_C);
-                    $(WZ).css("background",INITBG);
-                    choiceSize(WZ);
-
-                    $(obj).fadeOut();
-
-                    if(!!!$(WZ).attr("data-src")){
-                        //色彩选择
-                        $(WZ).css("background","none");
-                        $(WZ).css("background",INITBG);
-                        $(WZ).removeAttr("data-src");
-                    }else{
-                        //图片选择
-                        $(WZ).css("background","none");
-                        $(WZ).css("background","url("+ INITBG+") no-repeat");
-                        $(WZ).attr("data-src",INITBG);
-                        $(WZ).css("backgroundSize","100% 100%");
                     }
 
                     $(obj).find(".default_bg_div").off("click",divClick);
@@ -386,10 +239,20 @@ window.onload = function(){
 
     /*添加移除class*/
     $('.fontSize span').click(function () {
+        var _index = $(this).parents('.modify-options').attr('data-num');
         $(this).addClass('active');
         $(this).siblings().removeClass('active');
-        $('#title span').css('fontSize',$(this).text());
+        $('.edit_text').eq(_index).css('fontSize',$(this).text());
         $(this).parents('li').find('i').text($(this).text());
+    });
+    $('#scaling_el').bind('click',function(){
+        $('#scaling_el').css("zIndex",120);
+        $('.element2Mask').css("zIndex",zIndex++);
+        $('.element2Mask').animate({
+            bottom:'0'
+        },800);
+        txt_edit($('#scaling_el'));
+        $('.element2Mask li').find('button').bind('touchstart');
     });
 
     /*底部三个按钮事件*/
@@ -440,6 +303,7 @@ window.onload = function(){
                         $("body").css("background","url("+ INITBG+") no-repeat");
                         $("body").attr("data-src",INITBG);
                         $("body").css("backgroundSize","100% 100%");
+
                     }else{
                         $(obj).find(".upload_img_box .checked").removeClass("on");
                         $(obj).find(".default_bg_div").removeClass("on");
@@ -512,7 +376,7 @@ window.onload = function(){
                 var logo = $("#logo");
                 var title = $("title");
                 var el_img = $("#element_img");
-                var el_text = $("scaling_el");
+                var el_text = $("#scaling_el");
                 /*title*/
                 title.css({
                     top:data.title.axis_x+'px',
@@ -523,7 +387,7 @@ window.onload = function(){
                     lineHeight:data.title.height+'px',
                     fontSize:data.title.font_size+'px'
                 });
-                title.find('.title_txt').text(data.title.content);
+                title.find('.edit_text').text(data.title.content);
 
                 /*logo*/
                 logo.css({
@@ -543,7 +407,7 @@ window.onload = function(){
                     borderColor:'#'+data.element2.border_color
                 });
                 el_img.find('img').prop('src',data.element2.pic);
-                el_img.find('img').attr("data-src",data.base.background);
+                el_img.attr("data-src",data.element2.pic);
 
                 /*文字元素*/
                 el_text.css({
@@ -555,7 +419,7 @@ window.onload = function(){
                     lineHeight:data.element1.height+'px',
                     fontSize:data.element1.font_size+'px'
                 });
-                el_text.find('.txt').text(data.element1.content);
+                el_text.find('.edit_text').text(data.element1.content);
 
 
                 $("body").css("background","none");
@@ -563,39 +427,44 @@ window.onload = function(){
                 $("body").attr("data-src",data.base.background);
                 $("body").css("backgroundSize","100% 100%");
 
-                //重置编辑框
-                initEditBox();
+               
+
+                //初始化编辑框样式
+                var arr = [
+                    {w:data.title.width,h:data.title.height},
+                    {w:data.logo.width,h:data.logo.height},
+                    {w:data.element2.width,h:data.element2.height},
+                    {w:data.element1.width,h:data.element1.height}
+                ]
+
+                $(".edit_box").each(function(index){
+                    $(this).parent().css({
+                        '-webkit-box-sizing': "border-box",
+                        '-moz-box-sizing': "border-box",
+                        boxSizing: "border-box",
+                        transform:"none"
+                    });
+                    console.log(arr[index].w,"-----",arr[index].h,"---",index,"---",arr)
+                    $(this).css({
+                        width:arr[index].w + "px",
+                        height:arr[index].h + "px"
+                    })
+                    $(this).css({
+                        top: - 2 + "px",
+                        left: - 2 + "px"
+                    });
+                    
+                })
+                
+
+
+
             }
         );
 
 
 //        $("body").css("background",arr[rnd(0,6)]);
     });
-
-    // 设置事件监听器
-    window.addEventListener("DOMContentLoaded", function() {
-        // 获取元素
-        var canvas = document.getElementById("canvas"),
-            context = canvas.getContext("2d"),
-            video = document.getElementById("video"),
-            videoObj = { "video": true },
-            errBack = function(error) {
-                console.log("Video capture error: ", error.code);
-            };
-
-        // 设置video监听器
-        if(navigator.getUserMedia) { // Standard
-            navigator.getUserMedia(videoObj, function(stream) {
-                video.src = stream;
-                video.play();
-            }, errBack);
-        } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-            navigator.webkitGetUserMedia(videoObj, function(stream){
-                video.src = window.webkitURL.createObjectURL(stream);
-                video.play();
-            }, errBack);
-        }
-    }, false);
 
     var scaling_el_n1 = document.getElementById("rotate_el_n1");
     scaleORrotate(oTitle,scaling_el_n1);
@@ -655,43 +524,37 @@ function chang(obj) {
 /*文字编辑封装函数*/
 function txt_edit(obj){
     var border = obj.css("borderWidth");
-    var fontSize = obj.find('.title_txt').css("fontSize");
-    var color = '#000000';
-    var content = '';
+    var fontSize = obj.find('.edit_text').css("fontSize");
+    var color = obj.find('.edit_text').css("color");
+    var content = obj.find('.edit_text').text();
+    $(".content_inp").val(content);
+    $('.modify-options li').eq(0).find('i').text(color);
     //初始化
-    var arr = [color,fontSize,border,content];
-    $('.modify-options li span i').each(function (index) {
-        $(this).html(arr[index]);
-    });
 
     $(".content_inp").bind("input propertychange change", function (event) {
+        var _index = $(this).parents('.modify-options').attr('data-num');
         if (event.type != "propertychange" || event.originalEvent.propertyName == "value") {
-            $('.title_txt').text($(this).val());
-
-            var signstr = $('#uid').val() + $(this).val() + '.00';
-            // $("#pricesign").val(faultylabs.MD5(signstr));
+            $('.edit_text').eq(_index).text($(this).val());
         }
-
     });
-
-
     //修改字体颜色
-    $('.modify-options li').eq(0).find('input').bind("change",function () {
+    $('.color_select').bind("change",function () {
+        var _index = $(this).parents('.modify-options').attr('data-num');
         console.log($(this).val());
-        $('.modify-options li span i').eq(0).html($(this).val());
-        obj.css("color",$(this).val());
+        $('.edit_text').eq(_index).css("color",$(this).val());
+        $(this).prev().find('i').html($(this).val());
     });
     //修改边框
-    $('.modify-options li').eq(2).find('button').bind("touchstart",function (ev) {
+    $('.add_minus').bind("touchstart",function (ev) {
         event.stopPropagation();
         var type = $(this).html();
-        var num = parseFloat($('.modify-options li span i').eq(2).html());
+        var num = parseFloat($(this).parent().find('i').html());
         if(type == "-"){
             if(num!=0){
-                $('.modify-options li span i').eq(2).html(--num + "px");
+                $(this).parent().find('i').html(--num + "px");
             }
         }else{
-            $('.modify-options li span i').eq(2).html(++num + "px");
+            $(this).parent().find('i').html(++num + "px");
         }
         obj.css("border",num+"px #000 solid");
         choiceSize(obj);
@@ -701,7 +564,7 @@ function txt_edit(obj){
         $('.modify-options').animate({
             bottom:'-100%'
         },800);
-        $('#title').css("zIndex",1);
+        $(obj).css("zIndex",1);
         $('.modify-options li').find('button').unbind('touchstart');
     });
 }
@@ -900,13 +763,7 @@ function fn1(obj1){
             },1);
         }else {
             CHANGEWZ = null;
-            $(".edit_box").each(function(index, el) {
-                if($(this).css("display") =="block"){
-                    var WZ = $(this).parent();
-                    return false;
-                }
-            });
-            alert($(WZ).attr("class"))
+            
             $(obj).find(".default_bg_div").off("click");
             $(obj).find(".upload_img_box").off("click");
             $(".WZ_border button").off("click");
@@ -943,6 +800,11 @@ function fn1(obj1){
                             }
                         });
                     }
+
+                    if($(WZ).attr("id") == 'element_img'){
+                        var INITBG = $(WZ).find("img").attr("src") ;
+                       
+                    }
                     //色彩选择
                     $(obj).find(".default_bg_div").on("click",divClick);
 
@@ -969,6 +831,10 @@ function fn1(obj1){
                             $(WZ).css("background","url("+ INITBG+") no-repeat");
                             $(WZ).attr("data-src",INITBG);
                             $(WZ).css("backgroundSize","100% 100%");
+
+                            if($(WZ).attr("id") == 'element_img'){
+                               $(WZ).find("img").attr("src",INITBG) ;
+                            }
                         }else{
                             $(obj).find(".upload_img_box .checked").removeClass("on");
                             $(obj).find(".default_bg_div").removeClass("on");
@@ -978,6 +844,10 @@ function fn1(obj1){
                             $(WZ).css("background","url("+ $(this).find("img").attr("src")+") no-repeat");
                             $(WZ).attr("data-src",$(this).find("img").attr("src"));
                             $(WZ).css("backgroundSize","100% 100%");
+
+                            if($(WZ).attr("id") == 'element_img'){
+                               $(WZ).find("img").attr("src",$(this).find("img").attr("src")) ;
+                            }
                         }
                     }
 
@@ -1025,12 +895,13 @@ function fn1(obj1){
                     $(obj).find(".close").on("click",function(){
                         console.log(BORDER_W,"----",BORDER_C);
                         $(WZ).css("border",parseInt(BORDER_W) + "px solid " + BORDER_C);
+                        $(WZ).css("background","none");
                         $(WZ).css("background",INITBG);
                         choiceSize(WZ);
 
                         $(obj).fadeOut();
 
-                        if(!!$(WZ).attr("data-src")){
+                        if(!!!$(WZ).attr("data-src")){
                             //色彩选择
                             $(WZ).css("background","none");
                             $(WZ).css("background",INITBG);
@@ -1041,6 +912,9 @@ function fn1(obj1){
                             $(WZ).css("background","url("+ INITBG+") no-repeat");
                             $(WZ).attr("data-src",INITBG);
                             $(WZ).css("backgroundSize","100% 100%");
+                            if($(WZ).attr("id") == 'element_img'){
+                               $(WZ).find("img").attr("src",INITBG) ;
+                            }
                         }
 
                         $(obj).find(".default_bg_div").off("click",divClick);

@@ -30,7 +30,7 @@ function fileUpload_el(params){
     var default_url = params.default_url || '';
     var parse_response = params.parse_response;
 
-    var str='<input id="fileUpload'+(id)+'" class="fileUpload_inp" type="file" name="files[]" multiple style="opacity:0;position:absolute;width: 120px;height: 40px;">'+
+    var str='<input id="fileUpload'+(id)+'" class="fileUpload_inp" type="file" name="files[]" multiple style="opacity:0;position:absolute;width: 120px;height: 40px;z-index: 500;">'+
         '<input type="button" name="button" capture="camera" accept="image/*" value="" class="btn btn-primary upload_btn" data-upload-num="'+file_maxImg+'" onclick="openBrowse(this);">'+
         (desc == undefined ? '' : '<span class="upload_care">(*建议上传尺寸为640x1008)</span>')+
         '<div id="preview-up-img"></div>';

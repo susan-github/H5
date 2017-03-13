@@ -253,14 +253,6 @@ i{
 .default4{
     background: orchid;
 }
-#cameraInput{
-    position: absolute;
-    top: 0;
-    left:23%;
-    /*opacity: 0;*/
-    width:74%;
-    height: 40px;
-}
 .Bg_choose .close{
     position:absolute;
     top:5px;
